@@ -1,0 +1,419 @@
+/* ==========================================================================
+   바이브 카페 - 무인 결제 키오스크 스타일시트
+   디자인 토큰: 키오스크 전용 색상/타이포/셰이프 변수를 :root에 정의
+   ========================================================================== */
+:root {
+  /* 색상 토큰 */
+  --color-bg: #f4ede4;          /* 키오스크 화면(배경) */
+  --color-surface: #ffffff;     /* 콘텐츠 카드(표면) */
+  --color-primary: #5a3825;     /* 다크 에스프레소 브라운 (강조 텍스트/버튼) */
+  --color-accent: #c48a56;      /* 카라멜 브라운 (포커스/보조 강조) */
+  --color-success-bg: #e8f5e9;
+  --color-success-text: #2e7d32;
+  --color-border: #e2d7cc;
+
+  /* 셰이프 토큰 */
+  --radius-component: 14px;
+  --radius-button: 12px;
+  --container-max-width: 500px;
+
+  /* 터치 접근성: 모든 인터랙션 요소의 최소 높이 */
+  --touch-min-height: 48px;
+}
+
+/* ==========================================================================
+   전역 초기화
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  /* 세로형 태블릿/모바일에서도 화면이 꽉 차 보이도록 여백만 반응형으로 조정 */
+  padding: 32px 16px;
+  background-color: var(--color-bg);
+  font-family: '맑은 고딕', 'Apple SD Gothic Neo', sans-serif;
+  color: #3a2a1f;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   상단 브랜드 영역 (키오스크 상단 배너처럼 연출)
+   ========================================================================== */
+header {
+  max-width: var(--container-max-width);
+  margin: 0 auto 20px;
+  text-align: center;
+}
+
+header .logo {
+  font-size: 60px;
+  line-height: 1;
+}
+
+header h1 {
+  margin: 8px 0 4px;
+  color: var(--color-primary);
+  font-size: 28px;
+  font-weight: 800;
+}
+
+header .subtitle {
+  margin: 0;
+  color: #8a6a4e;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   탭 네비게이션 (주문하기 / 주문 내역)
+   ========================================================================== */
+.tabs {
+  display: flex;
+  max-width: var(--container-max-width);
+  margin: 0 auto 16px;
+  gap: 8px;
+}
+
+.tab-btn {
+  flex: 1;
+  min-height: var(--touch-min-height);
+  padding: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-button);
+  background-color: var(--color-surface);
+  color: var(--color-primary);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+/* 현재 활성화된 탭: 배경색 반전으로 선택 상태를 명확히 표시 */
+.tab-btn.active {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border-color: var(--color-primary);
+}
+
+/* 탭 콘텐츠 영역(주문하기 화면 / 주문 내역 화면) 공통 레이아웃 */
+.tab-panel {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   주문 내역 화면 (영수증 카드 리스트)
+   ========================================================================== */
+#order-history-empty {
+  margin: 40px auto 0;
+  padding: 24px;
+  background-color: var(--color-surface);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-component);
+  text-align: center;
+  color: #8a6a4e;
+  font-weight: 600;
+}
+
+#order-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* 영수증 느낌의 주문 카드 */
+.history-card {
+  padding: 16px 18px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-component);
+  box-shadow: 0 6px 16px rgba(90, 56, 37, 0.08);
+}
+
+.history-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--color-border);
+}
+
+.history-order-number {
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.history-order-time {
+  font-size: 12px;
+  color: #8a6a4e;
+}
+
+.history-customer {
+  margin: 0 0 4px;
+  font-weight: 700;
+}
+
+.history-menu {
+  margin: 0 0 8px;
+  color: #3a2a1f;
+  font-size: 14px;
+}
+
+.history-price {
+  margin: 0;
+  text-align: right;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+/* ==========================================================================
+   키오스크 디스플레이 패널 (form)
+   묵직한 카드 형태 + 입체적인 다중 레이어 그림자로 기기 패널 느낌 연출
+   ========================================================================== */
+#order-form {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 28px 24px;
+  background-color: var(--color-surface);
+  border-radius: 20px;
+  box-shadow:
+    0 10px 30px rgba(90, 56, 37, 0.12),
+    0 2px 8px rgba(90, 56, 37, 0.08),
+    inset 0 0 0 1px var(--color-border);
+}
+
+/* 각 입력 항목 블록 간 여백 */
+.form-group {
+  margin-bottom: 22px;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+/* 라벨: 키오스크에서 눈에 잘 들어오도록 굵고 진한 브라운 */
+#order-form label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+/* 옵션 패널(사이즈/추가 옵션)을 감싸는 fieldset */
+#order-form fieldset {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-component);
+  padding: 14px 16px 16px;
+  margin: 0;
+  background-color: var(--color-bg);
+}
+
+#order-form legend {
+  padding: 0 8px;
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+/* ==========================================================================
+   터치 친화적 입력 요소 (text, tel, number, select, textarea)
+   ========================================================================== */
+#order-form input[type="text"],
+#order-form input[type="tel"],
+#order-form input[type="number"],
+#order-form select,
+#order-form textarea {
+  width: 100%;
+  min-height: var(--touch-min-height);
+  padding: 12px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-component);
+  font-family: inherit;
+  font-size: 15px;
+  background-color: var(--color-surface);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+#order-form textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+/* 포커스 상태: 캐러멜 브라운 테두리 + 선명한 포커스 링 */
+#order-form input[type="text"]:focus,
+#order-form input[type="tel"]:focus,
+#order-form input[type="number"]:focus,
+#order-form select:focus,
+#order-form textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 4px rgba(196, 138, 86, 0.25);
+}
+
+/* ==========================================================================
+   옵션 선택 패널 (라디오 / 체크박스) - 터치 버튼(타일)처럼 연출
+   ========================================================================== */
+
+/* 라디오/체크박스 자체는 숨기지 않고 브랜드 컬러만 적용 (HTML 구조 유지) */
+#order-form fieldset input[type="radio"],
+#order-form fieldset input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin: 0 8px 10px 0;
+  accent-color: var(--color-primary);
+  vertical-align: middle;
+}
+
+/* 라벨을 넉넉한 패딩의 타일처럼 보이도록 확장하여 터치 영역 확보 */
+#order-form fieldset label[for^="size-"],
+#order-form fieldset label[for^="option-"] {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-min-height);
+  margin: 0 12px 12px 0;
+  padding: 10px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-component);
+  background-color: var(--color-surface);
+  font-weight: 600;
+  font-size: 14px;
+  color: #3a2a1f;
+}
+
+/* ==========================================================================
+   상태 디스플레이: 예상 금액 (전광판/디지털 영수증 느낌)
+   ========================================================================== */
+#estimated-price {
+  padding: 18px 16px;
+  background-color: var(--color-bg);
+  border-top: 2px solid var(--color-border);
+  border-bottom: 2px solid var(--color-border);
+  border-radius: var(--radius-component);
+  text-align: center;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--color-primary);
+  letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   키오스크 액션 바 (주문하기 / 다시 작성)
+   ========================================================================== */
+#order-form button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 56px;
+  border-radius: var(--radius-button);
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+}
+
+/* 주문하기: 강조된 Primary Action, 하단에 시각적 무게감 부여 */
+#order-btn {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border: none;
+  margin-bottom: 12px;
+  box-shadow: 0 6px 16px rgba(90, 56, 37, 0.3);
+}
+
+#order-btn:hover {
+  background-color: #4a2c1b;
+}
+
+/* 터치 피드백: 누르는 순간 미세하게 축소되어 물리적 반응감 제공 */
+#order-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 3px 8px rgba(90, 56, 37, 0.3);
+}
+
+/* 다시 작성: 오작동 방지를 위해 덜 튀는 아웃라인 스타일 */
+#reset-btn {
+  background-color: var(--color-surface);
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+}
+
+#reset-btn:hover {
+  background-color: var(--color-bg);
+}
+
+#reset-btn:active {
+  transform: scale(0.98);
+}
+
+/* ==========================================================================
+   주문 완료 메시지 - 팝업 알림처럼 눈에 띄는 연출
+   ========================================================================== */
+#order-confirmation {
+  max-width: var(--container-max-width);
+  margin: 20px auto 0;
+  padding: 18px 20px;
+  background-color: var(--color-success-bg);
+  color: var(--color-success-text);
+  border-radius: 16px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: 0 8px 20px rgba(46, 125, 50, 0.15);
+}
+
+/* ==========================================================================
+   숨김 상태 제어
+   [hidden] 속성과 .hidden 클래스 모두 강제 숨김 처리
+   ========================================================================== */
+[hidden] {
+  display: none;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ==========================================================================
+   반응형: 모바일 및 세로형 태블릿 화면 대응
+   ========================================================================== */
+@media (max-width: 480px) {
+  body {
+    padding: 20px 10px;
+  }
+
+  #order-form {
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+
+  header .logo {
+    font-size: 48px;
+  }
+
+  header h1 {
+    font-size: 24px;
+  }
+
+  #estimated-price {
+    font-size: 24px;
+  }
+
+  #order-form fieldset label[for^="size-"],
+  #order-form fieldset label[for^="option-"] {
+    padding: 9px 12px;
+    margin: 0 8px 10px 0;
+    font-size: 13px;
+  }
+
+  #order-form button {
+    font-size: 16px;
+  }
+}
